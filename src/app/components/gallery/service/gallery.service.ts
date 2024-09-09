@@ -12,14 +12,9 @@ export class GalleryService {
 
   constructor(private http: HttpClient) {}
 
-  // Get random image from the API
-  getRandomImage(): Observable<Blob> {
-    this.setLoading(true);
-    const randomDelay = this.getRandomDelay(200, 300);
-    return this.http.get(this.apiUrl, { responseType: 'blob' }).pipe(
-      delay(randomDelay),
-      finalize(() => this.setLoading(false))
-    );
+  // Update the loading status Emit new status using a subject
+  private setLoading(isLoading: boolean): void {
+    this.loadingSubject.next(isLoading);
   }
 
   // Get loading status as Observable
@@ -27,9 +22,14 @@ export class GalleryService {
     return this.loadingSubject.asObservable();
   }
 
-  // Set loading status to the subject
-  private setLoading(isLoading: boolean): void {
-    this.loadingSubject.next(isLoading);
+  // Get random image from the API
+  getRandomImage(): Observable<Blob> {
+    this.setLoading(true);
+    const randomDelay = this.getRandomDelay(200, 300);
+    return this.http.get(this.apiUrl, { responseType: 'blob' }).pipe(
+      delay(randomDelay),
+      finalize(() => this.setLoading(false)) // Set loading to false once the request completes
+    );
   }
 
   // Get random delay between min and max

@@ -1,5 +1,5 @@
 export interface IGallery {
-  id: string | number;
+  id: string;
   photo?: string;
   url?: string;
   isFavorite?: boolean;

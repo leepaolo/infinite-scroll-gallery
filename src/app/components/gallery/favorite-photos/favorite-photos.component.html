@@ -2,7 +2,7 @@
   <div class="grid-container">
     <mat-grid-list cols="3" rowHeight="2:3">
       <mat-grid-tile
-        *ngFor="let item of favoritePhotos"
+        *ngFor="let item of favoritePhotos; trackBy: trackByPhotoId"
         (click)="openPhoto(item)"
       >
         <img [src]="item.photo" [alt]="'Favorite Photo ' + item.id" />

@@ -6,6 +6,7 @@ import { IGallery } from 'src/app/models/gallery.interface';
   providedIn: 'root',
 })
 export class FavoritesService {
+  //Initialize empty IGallery array, keep track current state of the favorite images
   private favoritesSubject = new BehaviorSubject<IGallery[]>([]);
 
   // Load favorite from the local storage
@@ -13,10 +14,9 @@ export class FavoritesService {
     this.loadFavoritesFromLocalStorage();
   }
 
-  // Get favorites as Observable
+  // Get the current list of favorite images as an observable
   getFavorites(): Observable<IGallery[]> {
     const favorites = this.favoritesSubject.asObservable();
-    // console.log('Emitting favorites:', favorites); // Aggiungi questo log
     return favorites;
   }
 
